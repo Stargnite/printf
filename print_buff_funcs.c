@@ -3,81 +3,61 @@
 #include <stdlib.h>
 
 /**
- * print_c - copy a character into buffer & print if buffer is full
- * @args: va_list of given to _printf
- * @buffer: the buffer being copied to print
- * @buflen: current length of buffer. i.e characters in buffer
- * @bufpos: current position of character. i.e index
- * Return: number of characters copied to buffer
+ * print_c - writes character to stdout
+ * @arg: the argument
+ * Return: 0
  */
-int print_c(va_list args, char buffer[], int *buflen, int *bufpos)
+int print_c(va_list arg)
 {
-	if (*buflen < 1024)
-	{
-		buffer[*bufpos] = va_arg(args, int);
-		*bufpos += 1;
-		*buflen += 1;
-		if (*buflen == 1024)
-			write_buffer(buffer, buflen, bufpos);
-	}
-	else
-	{
-		write_buffer(buffer, buflen, bufpos);
-		buffer[*bufpos] = va_arg(args, int);
-		*bufpos += 1;
-		buflen += 1;
-	}
-	return (1);
+	return (_putchar(va_arg(arg, int)));
 }
 
 /**
- * print_s - copy string into buffer and print if buffer is full
- * @args: va_list of all given arguments to _printf
- * @buffer: the buffer being copied to print
- * @buflen: length of buffer. i.e nums of characters in buffer
- * @bufpos: current position/index of character in buffer
+ * print_s - prints a string with lower case specifier
+ * @arg: arguments
  *
- * Return: number of characters copied to buffer
+ * Return: number of characters printed
  */
 
-int print_s(va_list args, char buffer[], int *buflen, int *bufpos)
+int print_s(va_list arg)
 {
-	char *str;
-	int i, chars;
+	int i;
+	char *str = va_arg(arg, char *);
 
-	i = chars = 0;
-	str = va_arg(args, char *);
 	if (str == NULL)
 		str = "(null)";
-	while (str[i] != '\0')
-	{
-		buffer[*bufpos] = str[i];
-		*bufpos += 1;
-		*buflen += 1;
-		if (*buflen == 1024)
-			write_buffer(buffer, buflen, bufpos);
-		i++;
-		chars++;
-	}
-	return (chars);
+	else if (*str == '\0')
+		return (-1);
+
+	for (i = 0; str[i]; i++)
+		_putchar(str[i]);
+	return (i);
 }
 
 /**
- * print_int - function to copy a number to the buffer
- * @args: va_list of all given arguments to _printf
- * @buffer: the buffer being copied to
- * @buflen: the current length of the buffer
- * @bufpos: index of characters in the buffer
+ * print_int - prints an integer
+ * @arg: argument
  *
- * Return: number of characters copied to the buffer
+ * Return: 0
  */
 
-int print_int(va_list args, char buffer[], int *buflen, int *bufpos)
+int print_int(va_list arg)
 {
-	int chars;
-	int n;
+	unsigned int divisor = 1, i, resp, charPrinted = 0;
+	int n = va_arg(arg, int);
 
-	n = va_arg(args, int);
-	chars = print_number(n, buffer, buflen, bufpos);
-	return (chars);
+	if (n < 0)
+	{
+		_putchar('-');
+		charPrinted++;
+		n *= -1;
+	}
+	for (i = 0; n / divisor > 9; i++, divisor *= 10)
+		;
+	for (; divisor >= 1; n %= divisor, divisor /= 10, charPrinted++)
+	{
+		resp = n / divisor;
+		_putchar('0' + resp);
+	}
+	return (charPrinted);
 }
