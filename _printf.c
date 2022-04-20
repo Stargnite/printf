@@ -20,6 +20,7 @@ int print_identifier(char next, va_list arg)
 		{"s", print_s},
 		{"d", print_int},
 		{"i", print_int},
+		{"S", print_str},
 		{NULL, NULL}
 	};
 

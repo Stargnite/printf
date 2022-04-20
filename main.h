@@ -21,5 +21,6 @@ int print_c(va_list arg);
 int print_int(va_list arg);
 int print_s(va_list arg);
 int print_mod(void);
+int print_unsignedIntToHex(unsigned int num, char _case);
 
 #endif
