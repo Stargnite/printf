@@ -84,5 +84,4 @@ project_junkyard
 Function files used to run various tests on the _printf Function.
 
 Authors
-Emmanuel Augustine Effiong
-Tobi Amoo-sobayo
+Emmanuel Augustine Effiong and Tobi Amoo-sobayo
