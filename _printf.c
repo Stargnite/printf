@@ -12,10 +12,10 @@ int _printf(const char *format, ...)
 	char buffer[2000];
 	va_list arg;
 	call_t container[] = {
-		{'c', parse_char},
+		{'c', parse_char}, {'X', parse_X}, {'R', parse_R13},
 		{'s', parse_string}, {'i', parse_int}, {'d', parse_int},
 		{'%', parse_mod}, {'b', parse_binary}, {'o', parse_oct},
-		{'x', parse_hex}, {'\0', NULL}
+		{'x', parse_hex}, {'r', parse_rev}, {'u', parse_uint}, {'\0', NULL}
 	};
 	if (!format)
 		return (-1);
