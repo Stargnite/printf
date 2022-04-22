@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#ignore files genrated by emacs
+*~
+*#
+
+#ignore main file 
+*main.c
+
+#ignore exe file
+*.exe
+*.out
