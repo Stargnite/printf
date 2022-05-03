@@ -7,7 +7,7 @@ What you would learn from this project:
 How to use git in a team setting
 Applying variadic functions to big projects
 The complexities of printf
-Managing a lot of flies and finding a good workflow
+Managing a lot of files and finding a good workflow
 Prototype
 int _printf(const char *format, ...);
 Usage
