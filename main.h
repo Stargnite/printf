@@ -14,8 +14,8 @@
 
 typedef struct call
 {
-	char t;
-	int (*f)(char *, va_list, int);
+	char *c;
+	int (*f)(va_list);
 } call_t;
 
 int _printf(const char *format, ...);
