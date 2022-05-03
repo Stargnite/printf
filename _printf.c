@@ -8,42 +8,40 @@
 
 int _printf(const char *format, ...)
 {
-	int i = 0, j = 0, buff_count = 0, prev_buff_count = 0;
-	char buffer[2000];
-	va_list arg;
-	call_t container[] = {
-		{'c', parse_char}, {'X', parse_X}, {'R', parse_R13},
-		{'s', parse_string}, {'i', parse_int}, {'d', parse_int},
-		{'%', parse_mod}, {'b', parse_binary}, {'o', parse_oct},
-		{'x', parse_hex}, {'r', parse_rev}, {'u', parse_uint}, {'\0', NULL}
-	};
-	if (!format)
-		return (-1);
-	va_start(arg, format);
-	while (format && format[i] != '\0')
+	int count = -1;
+
+	if (format != NULL)
 	{
-		if (format[i] == '%')
+		int i;
+		va_list ar_list;
+		int (*o)(va_list);
+
+		va_start(ar_list, format);
+
+		if (format[0] == '%' && format[1] == '\0')
+			return (-1);
+
+		count = 0;
+
+		for (i = 0; format[i] != '\0'; i++)
 		{
-			i++, prev_buff_count = buff_count;
-			for (j = 0; container[j].t != '\0'; j++)
+			if (format[i] == '%')
 			{
-				if (format[i] == '\0')
-					break;
-				if (format[i] == container[j].t)
+				if (format[i + 1] == '%')
 				{
-					buff_count = container[j].f(buffer, arg, buff_count);
-					break;
+					count += _putchar(format[i]);
+				}
+				else if (format[i + 1] != '\0')
+				{
+					o = get_func(format[i + 1]);
+					count += (o ? o(ar_list) : _putchar(format[i]) + _putchar(format[i + 1]));
+					i++;
 				}
 			}
-			if (buff_count == prev_buff_count && format[i])
-				i--, buffer[buff_count] = format[i], buff_count++;
+			else
+				count += _putchar(format[i]);
 		}
-		else
-			buffer[buff_count] = format[i], buff_count++;
-		i++;
+		va_end(ar_list);
 	}
-	va_end(arg);
-	buffer[buff_count] = '\0';
-	print_buff(buffer, buff_count);
-	return (buff_count);
+	return (count);
 }
