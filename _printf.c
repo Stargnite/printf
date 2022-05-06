@@ -8,40 +8,51 @@
 
 int _printf(const char *format, ...)
 {
-	int count = -1;
+	char current_char;
 
-	if (format != NULL)
+	va_list arg;
+
+	if (format == 0)
+		return (-1);
+	va_start(arg, format);
+	current_char = *format;
+	while (current_char != '\0')
 	{
-		int i;
-		va_list ar_list;
-		int (*o)(va_list);
-
-		va_start(ar_list, format);
-
-		if (format[0] == '%' && format[1] == '\0')
-			return (-1);
-
-		count = 0;
-
-		for (i = 0; format[i] != '\0'; i++)
+		format++;
+		if (current_char != '%')
 		{
-			if (format[i] == '%')
-			{
-				if (format[i + 1] == '%')
-				{
-					count += _putchar(format[i]);
-				}
-				else if (format[i + 1] != '\0')
-				{
-					o = get_func(format[i + 1]);
-					count += (o ? o(ar_list) : _putchar(format[i]) + _putchar(format[i + 1]));
-					i++;
-				}
-			}
-			else
-				count += _putchar(format[i]);
+			_putchar(current_char);
+			continue;
 		}
-		va_end(ar_list);
+		switch (*format++)
+		{
+			case '%':
+				_putchar('%');
+				break;
+			case 'o':
+				my_putoct(va_arg(arg, unsigned int));
+				break;
+			case 'u':
+				my_unsigned_int(va_arg(arg, unsigned int));
+				break;
+			case 'x':
+				my_put_unsigned_int_hex(va_arg(arg, unsigned int), 1);
+				break;
+			case 'X':
+				my_put_unsigned_int_hex(va_arg(arg, unsigned int), 0);
+				break;
+			case 's':
+				my_putstr(va_arg(arg, char *));
+				break;
+			case 'c':
+				_putchar(va_arg(arg, int));
+				break;
+			case 'i':
+			case 'd':
+				my_putint(va_arg(arg, int));
+				break;
+		}
 	}
-	return (count);
+	va_end(arg);
+	return (0);
 }

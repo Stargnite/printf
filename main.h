@@ -1,34 +1,20 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdarg.h>
-#include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
+#include <unistd.h>
 
-/**
- * struct call - struct call
- * @t: flag for data type
- * @f: function - associated function
- */
-
-typedef struct call
-{
-	char *c;
-	int (*f)(va_list);
-} call_t;
-
+void _putchar(char c);
+void my_putstr(char *s);
+void my_putint(int n);
+void my_put_unsigned_int_hex(unsigned int n, int shu);
+void my_unsigned_int(unsigned int n);
+void my_putoct(unsigned int n);
+void my_putbin(unsigned int n);
+int my_strlen(const char *str);
+int my_strcmp(const char *str1, const char *str2);
 int _printf(const char *format, ...);
-int _putchar(char c);
-int print_c(va_list ar_list);
-int (*get_func(char s))(va_list ar_lsit);
-int print_s(va_list ar_list);
-int print_d(va_list ar_list);
-int print_i(va_list ar_list);
-int print_b(va_list ar_list);
-int print_u(va_list ar_list);
-int print_o(va_list ar_list);
-int print_x(va_list ar_list);
-int print_X(va_list ar_list);
 
 #endif
